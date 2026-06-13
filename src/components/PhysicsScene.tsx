@@ -15,7 +15,7 @@ interface PhysicsSceneProps {
 export function PhysicsScene({ angle }: PhysicsSceneProps) {
   return (
     <Canvas
-      camera={{ position: [0, 1.4, 6.0], fov: 38, near: 0.1, far: 100 }}
+      camera={{ position: [0, 1.2, 3.5], fov: 42, near: 0.1, far: 100 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       shadows
       dpr={[1, 1.5]}

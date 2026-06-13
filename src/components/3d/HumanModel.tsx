@@ -1,6 +1,6 @@
 import { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useGLTF, Center } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { SkeletonUtils } from 'three-stdlib'
 import { ForceVectors } from './ForceVectors'
@@ -29,11 +29,12 @@ function easeInOutCubic(x: number): number {
 }
 
 function findBone(skeleton: THREE.Skeleton, baseName: string): THREE.Bone | undefined {
-  return skeleton.bones.find(b => 
-    b.name === baseName || 
-    b.name === `mixamorig${baseName}` || 
-    b.name.endsWith(baseName)
-  )
+  return skeleton.bones.find(b => {
+    const name = b.name.toLowerCase();
+    const target = baseName.toLowerCase();
+    // Matches exact, Mixamo prefixes, Blender underscores, etc.
+    return name === target || name.endsWith('_' + target) || name.endsWith(':' + target) || name.endsWith(target);
+  });
 }
 
 interface BoneCache {
@@ -282,9 +283,7 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
 
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
-      <Center position={[0, -1, 0]}>
-        <primitive object={clonedScene} />
-      </Center>
+      <primitive object={clonedScene} position={[0, 0, 0]} scale={1.6} />
 
       {/* Ground shadow disc */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>
