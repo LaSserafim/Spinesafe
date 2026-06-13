@@ -1,6 +1,6 @@
 import { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useGLTF, Center } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { SkeletonUtils } from 'three-stdlib'
 import { ForceVectors } from './ForceVectors'
@@ -130,22 +130,22 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
     /* ── Set natural standing pose (arms down at sides) ── */
 
     // Left arm: rotate down ~70° from T-pose toward body
-    if (bones.lArm) {
-      bones.lArm.quaternion.setFromEuler(new THREE.Euler(0, 0, 1.2))  // Z+ = rotate down
-    }
-    // Left forearm: slight bend
-    if (bones.lForeArm) {
-      bones.lForeArm.quaternion.setFromEuler(new THREE.Euler(0, 0.15, 0.1))
-    }
+    // if (bones.lArm) {
+    //   bones.lArm.quaternion.setFromEuler(new THREE.Euler(0, 0, 1.2))  // Z+ = rotate down
+    // }
+    // // Left forearm: slight bend
+    // if (bones.lForeArm) {
+    //   bones.lForeArm.quaternion.setFromEuler(new THREE.Euler(0, 0.15, 0.1))
+    // }
 
     // Right arm: rotate down ~70° (opposite direction)
-    if (bones.rArm) {
-      bones.rArm.quaternion.setFromEuler(new THREE.Euler(0, 0, -1.2))
-    }
-    // Right forearm: slight bend
-    if (bones.rForeArm) {
-      bones.rForeArm.quaternion.setFromEuler(new THREE.Euler(0, -0.15, -0.1))
-    }
+    // if (bones.rArm) {
+    //   bones.rArm.quaternion.setFromEuler(new THREE.Euler(0, 0, -1.2))
+    // }
+    // // Right forearm: slight bend
+    // if (bones.rForeArm) {
+    //   bones.rForeArm.quaternion.setFromEuler(new THREE.Euler(0, -0.15, -0.1))
+    // }
 
     // Slight natural head tilt (not perfectly robotic straight)
     if (bones.head) {
@@ -327,9 +327,7 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
 
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
-      <Center top position={[0, -1, 0]}>
-        <primitive object={clonedScene} />
-      </Center>
+      <primitive object={clonedScene} />
 
       {/* Ground shadow disc */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>
