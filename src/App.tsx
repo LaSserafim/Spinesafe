@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Chart, registerables } from 'chart.js'
 import { PhysicsScene } from './components/PhysicsScene'
+import { motion } from 'framer-motion'
 
 Chart.register(...registerables)
 
@@ -223,7 +224,12 @@ function App() {
       </nav>
 
       {/* ─── Section 1: Hero ─── */}
-      <section className="hero bg-navy">
+      <motion.section 
+        className="hero bg-navy"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="container hero-content">
           <h1>Your posture is applying 27kg of pressure to your spine.</h1>
           <p>
@@ -231,10 +237,17 @@ function App() {
             cervical spine degradation in students and desk workers.
           </p>
         </div>
-      </section>
+      </motion.section>
 
       {/* ─── Section 2: The Problem ─── */}
-      <section id="problem" className="bg-white">
+      <motion.section 
+        id="problem" 
+        className="bg-white"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="container">
           <div className="text-center">
             <h2 className="section-title">An Epidemic of Spinal Stress</h2>
@@ -269,10 +282,17 @@ function App() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ─── Section 3: How It Works ─── */}
-      <section id="how-it-works" className="bg-navy">
+      <motion.section 
+        id="how-it-works" 
+        className="bg-navy"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="container">
           <div className="text-center">
             <h2 className="section-title text-teal">How SpineSafe Works</h2>
@@ -322,10 +342,17 @@ function App() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ─── Section 4: The Physics (Interactive) ─── */}
-      <section id="physics" className="bg-gray">
+      <motion.section 
+        id="physics" 
+        className="bg-gray"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="container">
           <div className="text-center">
             <h2 className="section-title">The Physics of Posture</h2>
@@ -341,7 +368,13 @@ function App() {
             </div>
 
             {/* Controls & Metrics — unchanged */}
-            <div className="controls-wrapper">
+            <motion.div 
+              className="controls-wrapper glass-panel"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
               <div className="slider-container">
                 <div className="slider-header">
                   <label htmlFor="angle-slider">Forward Head Angle (θ)</label>
@@ -389,13 +422,20 @@ function App() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ─── Section 5: Results & Efficiency ─── */}
-      <section id="results" className="bg-white">
+      <motion.section 
+        id="results" 
+        className="bg-white"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="container">
           <div className="text-center">
             <h2 className="section-title">Clinical Validation Cohort</h2>
@@ -404,14 +444,27 @@ function App() {
               desk session.
             </p>
           </div>
-          <div className="chart-container">
+          <motion.div 
+            className="chart-container glass-panel"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
             <canvas ref={chartCanvasRef} id="resultsChart" />
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ─── Section 6: Our Mission ─── */}
-      <section id="mission" className="bg-navy">
+      <motion.section 
+        id="mission" 
+        className="bg-navy"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="container text-center">
           <h2 className="section-title">Empowering Global Ergonomics</h2>
           <p className="section-subtitle" style={{ color: 'var(--gray-400)' }}>
@@ -434,10 +487,17 @@ function App() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ─── Section 7: Generate Your Report ─── */}
-      <section id="report-generator" className="bg-gray">
+      <motion.section 
+        id="report-generator" 
+        className="bg-gray"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="container">
           <div className="text-center">
             <h2 className="section-title">Generate Your Report</h2>
@@ -445,7 +505,13 @@ function App() {
               Input session data to compute biomechanical metrics and export the clinical report.
             </p>
           </div>
-          <div className="report-card">
+          <motion.div 
+            className="report-card glass-panel"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
             <form id="report-form" className="report-form">
               <div className="form-header">
                 <div>Subject</div>
@@ -519,9 +585,9 @@ function App() {
                 </div>
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ─── Footer ─── */}
       <footer>

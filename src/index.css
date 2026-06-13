@@ -23,8 +23,9 @@
 
 body {
   font-family: var(--font-body);
-  color: var(--navy);
-  background-color: var(--white);
+  color: #F3F4F6;
+  background: radial-gradient(circle at top right, #15253F 0%, #0A1628 60%, #050b14 100%);
+  background-attachment: fixed;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -32,6 +33,7 @@ body {
 h1, h2, h3, h4, .stat-number {
   font-family: var(--font-heading);
   line-height: 1.2;
+  color: var(--white);
 }
 
 section {
@@ -46,8 +48,8 @@ section {
 /* Utilities */
 .text-center { text-align: center; }
 .text-teal { color: var(--teal); }
-.bg-navy { background-color: var(--navy); color: var(--white); }
-.bg-gray { background-color: var(--gray-50); }
+.bg-navy { background: transparent; color: var(--white); }
+.bg-gray { background: transparent; }
 
 .section-title {
   font-size: 2.5rem;
@@ -149,10 +151,10 @@ nav {
 .stat-card {
   text-align: center;
   padding: 2rem;
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.02);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-  border: 1px solid var(--gray-100);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -172,11 +174,11 @@ nav {
 .stat-card h3 {
   font-size: 1.25rem;
   margin-bottom: 1rem;
-  color: var(--navy);
+  color: var(--white);
 }
 
 .stat-card p {
-  color: #6B7280;
+  color: var(--gray-400);
   font-size: 0.95rem;
 }
 
@@ -262,11 +264,7 @@ nav {
 }
 
 .controls-wrapper {
-  background: var(--white);
   padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-  border: 1px solid var(--gray-100);
 }
 
 .slider-container {
@@ -282,7 +280,7 @@ nav {
 
 .slider-header label {
   font-weight: 600;
-  color: var(--navy);
+  color: var(--white);
 }
 
 .slider-header span {
@@ -323,18 +321,18 @@ nav {
 }
 
 .metric-card {
-  background: var(--gray-50);
+  background: rgba(255, 255, 255, 0.02);
   padding: 1.5rem;
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid var(--gray-100);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .metric-label {
   font-size: 0.875rem;
-  color: #6B7280;
+  color: var(--gray-400);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -344,7 +342,7 @@ nav {
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--white);
 }
 
 .risk-badge {
@@ -360,11 +358,7 @@ nav {
 
 /* Results */
 .chart-container {
-  background: var(--white);
   padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-  border: 1px solid var(--gray-100);
   height: 450px;
   width: 100%;
   margin: 0 auto;
@@ -398,11 +392,7 @@ nav {
 
 /* Report Generator */
 .report-card {
-  background: var(--white);
   padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-  border: 1px solid var(--gray-100);
   max-width: 900px;
   margin: 0 auto;
 }
@@ -417,20 +407,22 @@ nav {
 
 .form-header {
   font-weight: 600;
-  color: var(--navy);
-  border-bottom: 1px solid var(--gray-100);
+  color: var(--white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 0.5rem;
 }
 
 .subject-label {
   font-weight: 500;
-  color: var(--navy);
+  color: var(--white);
 }
 
 .form-input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--gray-100);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--white);
   border-radius: 8px;
   font-family: var(--font-body);
   font-size: 1rem;
@@ -466,12 +458,13 @@ nav {
 }
 
 .btn-secondary {
-  background-color: var(--navy);
+  background-color: rgba(255, 255, 255, 0.08);
   color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-secondary:hover {
-  background-color: var(--navy-light);
+  background-color: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
 }
 
@@ -489,12 +482,12 @@ nav {
 .report-table th, .report-table td {
   padding: 1rem 0.5rem;
   text-align: left;
-  border-bottom: 1px solid var(--gray-100);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .report-table th {
   font-weight: 600;
-  color: var(--navy);
+  color: var(--white);
 }
 
 .row-risk-low { background-color: rgba(0, 212, 170, 0.05); }
@@ -558,4 +551,14 @@ footer a {
   .form-row { grid-template-columns: 1fr; margin-bottom: 2rem; }
   .subject-label { font-weight: 700; margin-bottom: 0.5rem; }
   .report-table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+
+/* Glassmorphism Panel Class */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }

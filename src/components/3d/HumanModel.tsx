@@ -1,6 +1,6 @@
 import { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, Center } from '@react-three/drei'
 import * as THREE from 'three'
 import { SkeletonUtils } from 'three-stdlib'
 import { ForceVectors } from './ForceVectors'
@@ -29,7 +29,12 @@ function easeInOutCubic(x: number): number {
 }
 
 function findBone(skeleton: THREE.Skeleton, name: string): THREE.Bone | undefined {
-  return skeleton.bones.find(b => b.name === name)
+  // Strip prefixes like "mixamorig:" or "mixamorig" and clean spacing/case
+  const cleanTarget = name.replace(/^mixamorig:?_?/, '').toLowerCase()
+  return skeleton.bones.find((b) => {
+    const cleanBone = b.name.replace(/^mixamorig:?_?/, '').toLowerCase()
+    return b.name === name || cleanBone === cleanTarget || b.name.toLowerCase().includes(cleanTarget)
+  })
 }
 
 interface BoneCache {
@@ -70,6 +75,17 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
       }
     })
     return clone
+  }, [scene])
+
+  // Debug: Print all bone names in the scene to help resolve naming variations
+  useEffect(() => {
+    const boneNames: string[] = []
+    scene.traverse((child) => {
+      if ((child as THREE.Bone).isBone) {
+        boneNames.push(child.name)
+      }
+    })
+    console.log('Rigged skeleton bones found in untitled.glb:', boneNames)
   }, [scene])
 
   /* ── Setup: find bones, apply materials, set natural idle pose ── */
@@ -311,7 +327,9 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
 
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
-      <primitive object={clonedScene} />
+      <Center top position={[0, -1, 0]}>
+        <primitive object={clonedScene} />
+      </Center>
 
       {/* Ground shadow disc */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>
