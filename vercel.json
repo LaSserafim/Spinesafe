@@ -34,7 +34,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.(?:css|js|png|jpg|jpeg|svg|gif|ico)",
+      "source": "/(.*)\\.(css|js|png|jpg|jpeg|svg|gif|ico)$",
       "headers": [
         {
           "key": "Cache-Control",
