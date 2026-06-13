@@ -1,6 +1,6 @@
 import { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, Center } from '@react-three/drei'
 import * as THREE from 'three'
 import { SkeletonUtils } from 'three-stdlib'
 import { ForceVectors } from './ForceVectors'
@@ -28,13 +28,12 @@ function easeInOutCubic(x: number): number {
   return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2
 }
 
-function findBone(skeleton: THREE.Skeleton, name: string): THREE.Bone | undefined {
-  // Strip prefixes like "mixamorig:" or "mixamorig" and clean spacing/case
-  const cleanTarget = name.replace(/^mixamorig:?_?/, '').toLowerCase()
-  return skeleton.bones.find((b) => {
-    const cleanBone = b.name.replace(/^mixamorig:?_?/, '').toLowerCase()
-    return b.name === name || cleanBone === cleanTarget || b.name.toLowerCase().includes(cleanTarget)
-  })
+function findBone(skeleton: THREE.Skeleton, baseName: string): THREE.Bone | undefined {
+  return skeleton.bones.find(b => 
+    b.name === baseName || 
+    b.name === `mixamorig${baseName}` || 
+    b.name.endsWith(baseName)
+  )
 }
 
 interface BoneCache {
@@ -112,18 +111,18 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
 
     const s = skeleton
     const bones: BoneCache = {
-      head:      findBone(s, 'mixamorig:Head'),
-      neck:      findBone(s, 'mixamorig:Neck'),
-      spine2:    findBone(s, 'mixamorig:Spine2'),
-      spine1:    findBone(s, 'mixamorig:Spine1'),
-      spine:     findBone(s, 'mixamorig:Spine'),
-      hips:      findBone(s, 'mixamorig:Hips'),
-      lShoulder: findBone(s, 'mixamorig:LeftShoulder'),
-      rShoulder: findBone(s, 'mixamorig:RightShoulder'),
-      lArm:      findBone(s, 'mixamorig:LeftArm'),
-      rArm:      findBone(s, 'mixamorig:RightArm'),
-      lForeArm:  findBone(s, 'mixamorig:LeftForeArm'),
-      rForeArm:  findBone(s, 'mixamorig:RightForeArm'),
+      head:      findBone(s, 'Head'),
+      neck:      findBone(s, 'Neck'),
+      spine2:    findBone(s, 'Spine2'),
+      spine1:    findBone(s, 'Spine1'),
+      spine:     findBone(s, 'Spine'),
+      hips:      findBone(s, 'Hips'),
+      lShoulder: findBone(s, 'LeftShoulder'),
+      rShoulder: findBone(s, 'RightShoulder'),
+      lArm:      findBone(s, 'LeftArm'),
+      rArm:      findBone(s, 'RightArm'),
+      lForeArm:  findBone(s, 'LeftForeArm'),
+      rForeArm:  findBone(s, 'RightForeArm'),
     }
     bonesRef.current = bones
 
@@ -163,51 +162,7 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
     }
   }, [clonedScene])
 
-  /* ── Scale & centre (dynamic bone-based) ──
-     Mixamo exports sometimes have massive arbitrary root translations.
-     We use the actual bone world positions to robustly scale and ground the model. */
-  useEffect(() => {
-    const hips = clonedScene.getObjectByName('mixamorig:Hips') as THREE.Bone | undefined
-    const leftFoot = clonedScene.getObjectByName('mixamorig:LeftFoot') as THREE.Bone | undefined
-    const head = (clonedScene.getObjectByName('mixamorig:HeadTop_End') || clonedScene.getObjectByName('mixamorig:Head')) as THREE.Bone | undefined
 
-    if (hips && leftFoot && head) {
-      clonedScene.scale.setScalar(1)
-      clonedScene.position.set(0, 0, 0)
-      clonedScene.updateMatrixWorld(true)
-
-      const footPos = new THREE.Vector3()
-      const headPos = new THREE.Vector3()
-      const hipsPos = new THREE.Vector3()
-
-      leftFoot.getWorldPosition(footPos)
-      head.getWorldPosition(headPos)
-
-      // Calculate true height from foot to head
-      const actualHeight = headPos.y - footPos.y
-      // Failsafe in case of weird bounding
-      const targetHeight = 2.2
-      const scale = actualHeight > 0.1 ? (targetHeight / actualHeight) : 0.59
-      
-      clonedScene.scale.setScalar(scale)
-      clonedScene.updateMatrixWorld(true)
-
-      // Re-measure after scaling to apply translation
-      leftFoot.getWorldPosition(footPos)
-      hips.getWorldPosition(hipsPos)
-
-      clonedScene.position.set(
-        -hipsPos.x,
-        clonedScene.position.y - footPos.y, // plant foot at y=0
-        -hipsPos.z                          // center on hips
-      )
-    } else {
-      // Fallback
-      const scale = 0.59
-      clonedScene.scale.setScalar(scale)
-      clonedScene.position.set(0, -0.09 * scale, 0)
-    }
-  }, [clonedScene])
 
   /* ── Frame loop ── */
   useFrame(({ clock }) => {
@@ -327,7 +282,9 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
 
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
-      <primitive object={clonedScene} />
+      <Center position={[0, -1, 0]}>
+        <primitive object={clonedScene} />
+      </Center>
 
       {/* Ground shadow disc */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>

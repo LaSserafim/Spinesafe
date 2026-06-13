@@ -15,7 +15,7 @@ interface PhysicsSceneProps {
 export function PhysicsScene({ angle }: PhysicsSceneProps) {
   return (
     <Canvas
-      camera={{ position: [0, 1.1, 5.5], fov: 40, near: 0.1, far: 100 }}
+      camera={{ position: [0, 1.4, 6.0], fov: 38, near: 0.1, far: 100 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       shadows
       dpr={[1, 1.5]}
@@ -38,13 +38,13 @@ export function PhysicsScene({ angle }: PhysicsSceneProps) {
       </Suspense>
 
       <OrbitControls
-        enablePan={true}
+        enablePan={false}
         enableZoom={true}
         maxPolarAngle={Math.PI * 0.8}
         minPolarAngle={Math.PI * 0.15}
         maxDistance={8}
         minDistance={2}
-        target={[0, 1.1, 0]}
+        target={[0, 1.2, 0]}
       />
     </Canvas>
   )
