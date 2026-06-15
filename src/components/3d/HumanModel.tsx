@@ -127,25 +127,7 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
     }
     bonesRef.current = bones
 
-    /* ── Set natural standing pose (arms down at sides) ── */
 
-    // Left arm: rotate down ~70° from T-pose toward body
-    // if (bones.lArm) {
-    //   bones.lArm.quaternion.setFromEuler(new THREE.Euler(0, 0, 1.2))  // Z+ = rotate down
-    // }
-    // // Left forearm: slight bend
-    // if (bones.lForeArm) {
-    //   bones.lForeArm.quaternion.setFromEuler(new THREE.Euler(0, 0.15, 0.1))
-    // }
-
-    // Right arm: rotate down ~70° (opposite direction)
-    // if (bones.rArm) {
-    //   bones.rArm.quaternion.setFromEuler(new THREE.Euler(0, 0, -1.2))
-    // }
-    // // Right forearm: slight bend
-    // if (bones.rForeArm) {
-    //   bones.rForeArm.quaternion.setFromEuler(new THREE.Euler(0, -0.15, -0.1))
-    // }
 
     // Slight natural head tilt (not perfectly robotic straight)
     if (bones.head) {
@@ -255,21 +237,7 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
       bones.spine1.quaternion.slerp(targetQ, 0.06)
     }
 
-    // Shoulders: 5% — roll forward
-    if (bones.lShoulder && rest.has('lShoulder')) {
-      const targetQ = new THREE.Quaternion().setFromEuler(
-        new THREE.Euler(s * 0.08, 0, -s * 0.04)
-      )
-      targetQ.premultiply(rest.get('lShoulder')!)
-      bones.lShoulder.quaternion.slerp(targetQ, 0.06)
-    }
-    if (bones.rShoulder && rest.has('rShoulder')) {
-      const targetQ = new THREE.Quaternion().setFromEuler(
-        new THREE.Euler(s * 0.08, 0, s * 0.04)
-      )
-      targetQ.premultiply(rest.get('rShoulder')!)
-      bones.rShoulder.quaternion.slerp(targetQ, 0.06)
-    }
+
 
     // ─ Update world positions for overlays ─
     if (bones.neck) {
@@ -283,7 +251,7 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
 
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
-      <primitive object={clonedScene} position={[0, 0, 0]} scale={1.6} />
+      <primitive object={clonedScene} position={[0, 0, 0]} scale={1.8} />
 
       {/* Ground shadow disc */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>

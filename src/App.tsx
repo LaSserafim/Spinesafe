@@ -362,8 +362,10 @@ function App() {
             </p>
           </div>
           <div className="physics-container">
-            {/* 3D model replaces old SVG silhouette */}
-            <div className="physics-3d-canvas">
+            <div 
+              className="physics-3d-canvas"
+              style={{ width: '100%', height: '65vh', minHeight: '600px', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            >
               <PhysicsScene angle={angle} />
             </div>
 
