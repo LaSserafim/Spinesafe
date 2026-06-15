@@ -29,12 +29,8 @@ function easeInOutCubic(x: number): number {
 }
 
 function findBone(skeleton: THREE.Skeleton, baseName: string): THREE.Bone | undefined {
-  return skeleton.bones.find(b => {
-    const name = b.name.toLowerCase();
-    const target = baseName.toLowerCase();
-    // Matches exact, Mixamo prefixes, Blender underscores, etc.
-    return name === target || name.endsWith('_' + target) || name.endsWith(':' + target) || name.endsWith(target);
-  });
+  const target = baseName.toLowerCase().replace('mixamorig:', '');
+  return skeleton.bones.find(b => b.name.toLowerCase().endsWith(target));
 }
 
 interface BoneCache {
@@ -251,7 +247,7 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
 
   return (
     <group ref={groupRef} position={[0, 0, 0]} rotation={[0, 0, 0]} scale={[1, 1, 1]}>
-      <primitive object={clonedScene} position={[0, 0, 0]} scale={1.8} />
+      <primitive object={clonedScene} position={[0, 0, 0]} scale={0.012} />
 
       {/* Ground shadow disc */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>
