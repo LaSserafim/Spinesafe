@@ -25,7 +25,7 @@ export function PhysicsScene({ angle }: PhysicsSceneProps) {
         height: '100%', 
         display: 'block' 
       }}
-      camera={{ position: [0, 1.2, 5.0], fov: 45, near: 0.1, far: 100 }}
+      camera={{ position: [0, 1.2, 3.8], fov: 35, near: 0.1, far: 100 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     >
       <ambientLight intensity={0.45} />
