@@ -362,10 +362,16 @@ function App() {
             </p>
           </div>
           <div className="physics-container">
-            <div 
-              className="physics-3d-canvas"
-              style={{ width: '100%', height: '65vh', minHeight: '600px', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            >
+            <div className="interactive-simulator-container" style={{
+              position: 'relative',
+              width: '100%',
+              height: '500px',
+              minHeight: '500px',
+              display: 'block',
+              clear: 'both',
+              overflow: 'visible',
+              margin: '0 auto'
+            }}>
               <PhysicsScene angle={angle} />
             </div>
 

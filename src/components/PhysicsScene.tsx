@@ -15,11 +15,18 @@ interface PhysicsSceneProps {
 export function PhysicsScene({ angle }: PhysicsSceneProps) {
   return (
     <Canvas
-      camera={{ position: [0, 1.2, 5.5], fov: 45, near: 0.1, far: 100 }}
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       shadows
       dpr={[1, 1.5]}
-      style={{ width: '100%', height: '100%', display: 'block', background: 'transparent' }}
+      style={{ 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        width: '100%', 
+        height: '100%', 
+        display: 'block' 
+      }}
+      camera={{ position: [0, 1.1, 4.2], fov: 35, near: 0.1, far: 100 }}
+      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     >
       <ambientLight intensity={0.45} />
       <directionalLight

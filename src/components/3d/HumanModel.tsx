@@ -250,7 +250,7 @@ export function HumanModel({ angle = 0, mode = 'hero' }: HumanModelProps) {
   })
 
   return (
-    <group ref={groupRef} position={[0, 0, 0]}>
+    <group ref={groupRef} position={[0, 0, 0]} rotation={[0, 0, 0]} scale={[1, 1, 1]}>
       <primitive object={clonedScene} position={[0, 0, 0]} scale={1.8} />
 
       {/* Ground shadow disc */}
